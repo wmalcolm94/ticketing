@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { requireAuth, validateRequest } from '@wamtickets/common';
+import { currentUser, requireAuth, validateRequest } from '@wamtickets/common';
 import { Ticket } from '../models/ticket';
 
 const router = express.Router();
 
 router.post(
   '/api/tickets',
+  currentUser,
   requireAuth,
   [
     body('title').not().isEmpty().withMessage('Title is required'),
